@@ -99,7 +99,7 @@ Siehe Jupyter-Notebook.
 
 \subsubsection*{c)}
 
-Verwendet wurden auch hier die Verteilungen gemäß Tabelle \ref{table:dist_1_1a} als Startverteilungen. Zu deren Erwartungswert und Standardabweichung wurde nun jedoch alle 5 Schritte ein zufälliger Wert aus der Verteilung $\mathcal{N}(0.0, 0.5)$ addiert. Das führt dazu, dass sich die Erwartungswerte der Verteilungen über die Zeit veränder aber auch dazu, dass der Index der optimalen Wahl wechselt, nämlich nach etwa $250$ Schritten von $2$ auf $0$ (siehe Graph vier in Abbildung \ref{img:1_2c}). Zu sehen ist, dass der Algorithmus auf diese Veränderung nicht reagieren kann und den Index der aus seiner Sicht besten Wahl nicht verändert. Die gesammelten Belohnungen fallen dabei trotzdem hoch aus, da alle Verteilungen verändert werden, sodass auch die nicht optimalen Möglichkeiten einen hohen Reward geben können, wenn auch nicht den höchsten. Das heißt, dass der Reward bei Wahl der optimalen Möglichkeit noch höher ausfallen könnte, das bezieht sich sowohl auf den Reward pro Schritt als auch auf den kumulierten Reward, diese Metriken sind in Graph eins und zwei in Abbildung \ref{img:1_2c} dargestellt.
+Verwendet wurden auch hier die Verteilungen gemäß Tabelle \ref{table:dist_1_1a} als Startverteilungen. Zu deren Erwartungswert und Standardabweichung wurde nun jedoch alle 5 Schritte ein zufälliger Wert aus der Verteilung $\mathcal{N}(0.0, 2)$ zum Erwartungswert und ein Wert aus der Verteilung $\mathcal{N}(0.0, 0.5)$ zur Standardabweichung addiert. Das führt dazu, dass sich die Erwartungswerte der Verteilungen über die Zeit verändern aber auch dazu, dass der Index der optimalen Wahl wechselt, nämlich nach etwa $550$ Schritten (konstant) von $3$ auf $1$ (siehe Graph vier in Abbildung \ref{img:1_2c}). Zu sehen ist, dass der Algorithmus auf diese Veränderung nicht reagieren kann und den Index der aus seiner Sicht besten Wahl nicht verändert. Dass der Algorithmus nun eine nicht optimale Wahl trifft, spiegelt sich auch in den gesammelten Belohnungen wieder. In den kumulierten Belohnungen sieht man, dass diese am Ende sinken, heißt, dass negativer Reward gesammelt wird (siehe Graph zwei in Abbildung \ref{img:1_2c}), da weiterhin Möglichkeit drei gewählt wird, die inzwischen einen negativen Erwartungswert hat (siehe Graph vier Abbildung \ref{img:1_2c2}), anstatt Möglichkeit eins, welche die optimale mit einem positiven Erwartungswert ist (Graph zwei, Abbildung \ref{img:1_2c2}).
 
 \begin{figure}[h]
     \centering
@@ -108,7 +108,19 @@ Verwendet wurden auch hier die Verteilungen gemäß Tabelle \ref{table:dist_1_1a
     \label{img:1_2c}
 \end{figure}
 
+
+Des Weiteren zeigt Abbildung \ref{img:1_2c2} für jeden Index, wie die Schätzung des Erwartungswertes auf die Veränderung des echten Erwartungswertes reagiert. Zu sehen ist, dass nur die Schätzung für Möglichkeit drei annähernd dem echten Wert folgt, da der Algorithmus diese Möglichkeit noch immer für die beste hält und häufig Werte aus ihr wählt, die die Schätzung beeinflussen. Die anderen Schätzungen bleiben nahezu konstant, sodass der Algorithmus erst viel zu spät auf die neue optimale Möglichkeit reagieren kann.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{img/1_2c2.png}
+    \caption{Nicht-Stationäres Banditenproblem: Schätzung vs. echter Wert für jede Wahlmöglichkeit}
+    \label{img:1_2c2}
+\end{figure}
 \subsubsection*{d)}
+
+In Aufgabenteil 1.2c) wurde gezeigt, dass die aktuelle Implementierung des Algorithmus nicht auf die Veränderung des optimalen Index reagieren kann. In der Beschreibung zu 1.2a) wurden bereits mögliche Verbesserungsvorschläge angeschnitten. Diese Vorschläge beziehen sich primär auf die Gewichtung des Erkundungs-Anteils. Da die realen Erwartungswerte der Verteilungen nicht statisch sind, ist ein geringer Erkundungs-Anteil oder gar ein zeitabhängiges Verschwinden dieses Anteils hinderlich für den Algorithmus. Das heißt im Umkehrschluss, dass ein höherer Erkundungs-Anteil förderlich sein könnte, indem so auf den Wechsel der optimalen Wahl reagiert werden kann.\\
+Außerdem kann ein "resetten" des Algorithmus von Zeit zu Zeit sinnvoll sein. Dies kann zum einen bei der Detektion der Änderung der optimalen Wahl helfen und zum anderen den Algorithmus dazu befähigen, die Erwartungsschätzung anzupassen. Der Grund für letzteren Vorteil liegt darin, dass die Schätzung des Erwartungswertes auf Durchschnittsbildung basiert. Das heißt, dass vom Durchschnitt abweichende Werte im zeitlich späteren Teil der Durchführung keinen großen Einfluss mehr auf den Durchschnittswert haben, da die vorherigen Werte diese Schätzung bereits gefestigt haben und mengenmäßig (stark) überwiegen. So kann nur schlecht auf Veränderung der Erwartungswerte reagiert werden, selbst wenn sich der Index der optimalen Wahl nicht ändert. Die Konsequenz für eine Verbesserung der Implementierung ist, dass mit einem ``Moving Average'' über ein kleineres Fenster gearbetet werden könnte, um der Schätzung die Möglichkeit zu geben, auch im späteren Verlauf der Durchführung auf abweichende Werte zu reagieren.
 
 %--/Paper--
 
