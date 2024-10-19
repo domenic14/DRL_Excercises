@@ -99,6 +99,14 @@ Siehe Jupyter-Notebook.
 
 \subsubsection*{c)}
 
+Verwendet wurden auch hier die Verteilungen gemäß Tabelle \ref{table:dist_1_1a} als Startverteilungen. Zu deren Erwartungswert und Standardabweichung wurde nun jedoch alle 5 Schritte ein zufälliger Wert aus der Verteilung $\mathcal{N}(0.0, 0.5)$ addiert. Das führt dazu, dass sich die Erwartungswerte der Verteilungen über die Zeit veränder aber auch dazu, dass der Index der optimalen Wahl wechselt, nämlich nach etwa $250$ Schritten von $2$ auf $0$ (siehe Graph vier in Abbildung \ref{img:1_2c}). Zu sehen ist, dass der Algorithmus auf diese Veränderung nicht reagieren kann und den Index der aus seiner Sicht besten Wahl nicht verändert. Die gesammelten Belohnungen fallen dabei trotzdem hoch aus, da alle Verteilungen verändert werden, sodass auch die nicht optimalen Möglichkeiten einen hohen Reward geben können, wenn auch nicht den höchsten. Das heißt, dass der Reward bei Wahl der optimalen Möglichkeit noch höher ausfallen könnte, das bezieht sich sowohl auf den Reward pro Schritt als auch auf den kumulierten Reward, diese Metriken sind in Graph eins und zwei in Abbildung \ref{img:1_2c} dargestellt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{img/1_2c.png}
+    \caption{Auswertung des nicht-stationären Banditenproblems}
+    \label{img:1_2c}
+\end{figure}
 
 \subsubsection*{d)}
 
