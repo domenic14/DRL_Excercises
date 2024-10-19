@@ -12,7 +12,7 @@
 \headsep=0.25in
 
 \title{\textbf{Dokumentation zu:\\DRL-Aufgabenblatt "Der K-armige Bandit"}}
-\author{ Max Mustermann, Domenic Scholz}
+\author{ Erik Viere, Daniel Hilfer, Domenic Scholz}
 \date{\today}
 
 \begin{document}
@@ -91,8 +91,15 @@ Abschließend lässt sich ein Unterschied in der Lernphase erkennen. Der verring
 
 \subsection*{Aufgabe 1.2}
 \subsubsection*{a)}
+Das Banditenproblem beschreibt ein Problem, bei dem es darum geht, aus k verschiedenen Möglichkeiten die beste zu erkennen und diese zu verfolgen, die konkreten Anwendungsfälle definieren dabei "beste Möglichkeit" und "verfolgen" selbst. Nicht-Stationärität beschreibt, dass sich die Güte einer Möglichkeit im Lauf der Zeit verändert (konkreter: Es verändert sich beispielsweise die zu erwartende Belohnung bei der Wahl einer Möglichkeit nach oben oder unten). Dies kann so modelliert werden, indem die wahre erwartete Belohnung einer Möglichkeit alle X Schritte um einen zufälligen oder bestimmten Wert in- bzw. dekrementiert wird, der Erwartungswert der einzelnen Möglichkeiten und somit auch die beste der Möglichkeiten ist also nicht stationär, sondern verändert sich mit der Zeit. Ein Algorithmus zur Lösung des Problems kann im Prinzip ähnlich wie der Algorithmus zur Lösung des stationären Banditenproblems arbeiten. Der Unterschied ist, dass sich der Algorithmus nun nicht mehr sicher sein kann, dass die beste Möglichkeit die beste bleibt. Es sollte also mehr Wert auf die Erkundung gelegt werden, sodass Veränderungen in den Möglichkeiten erkannt werden. Auch ist es möglich, den Algorithmus zwischendurch (teilsweise) zu "resetten", sodass ihm das bisherige Wissen genommen wird und er die Möglichkeiten unvoreingenommen erneut erkunden kann. Letzeres ist jedoch nur sinnvoll, wenn starke Schwankungen in den Möglichkeiten den Banditen zu erwarten sind.Eine bestehende Implementierung könnte a) nach dem Regret oder b) nach ihrer Trägheit beurteilt werden. Trägheit meint dabei, wie schnell oder langsam ein Algorithmus auf eine Veränderung in den Möglichkeiten reagiert und die Schätzwerte und die Wahl der optimalen Möglichkeit anpasst.
+
 \subsubsection*{b)}
+
+Siehe Jupyter-Notebook.
+
 \subsubsection*{c)}
+
+
 \subsubsection*{d)}
 
 %--/Paper--
