@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+
+\usepackage{sectsty}
+\usepackage{graphicx}
+\usepackage{amsmath} % for 'pmatrix' environment
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\title{\textbf{Dokumentation zu:\\DRL-Aufgabenblatt "Markov Decision Processes"}}
+\author{Erik Viere, Daniel Hilfer, Domenic Scholz}
+\date{\today}
+
+\begin{document}
+\maketitle	
+\pagebreak
+
+\section*{Aufgabe 2.1}
+\section*{Aufgabe 2.2}
+\section*{Aufgabe 2.3}
+\subsection*{a)}
+Jeder State $\mathcal{S}$ wird definiert durch einen Vektor der folgenden Form:
+\[ % enter display math mode
+\begin{Bmatrix}
+    \left.
+    \begin{pmatrix}
+        c_{xy}\\
+        c_v\\
+        p_\alpha\\
+        p_\omega
+    \end{pmatrix}
+    \right\vert
+    c_{xy} = Cart~position,~c_v = cart~velocity,~p_\alpha = pole~angle,~p_\omega = angular~velocity~of~pole
+\end{Bmatrix}
+\]%  
+Die Aktionen $\mathcal{A}$ sind gegeben durch:
+\[ % enter display math mode
+\begin{Bmatrix}
+    Cart~nach~links~schieben, && Cart~nach~rechts~schieben
+\end{Bmatrix}
+\]% 
+Die Zustandsübergänge werden dabei durch die Bewegungsgleichungen der physikalischen Umgebung definiert. So kann eine Cart-Bewegung nach links den Pole, abhängig von der Cart- und Pole-Geschwindigkeit, nach links fallen lassen, die Fallgeschwindigkeit verringern oder gar einen Fall nach rechts veranlassen oder diesen beschleunigen. Analog für eine Cart-Bewegung nach rechts.\\
+Die Belohnungsstruktur hängt davon ab, was das endgültige Ziel ist. Sofern das Ziel ``nur'' ist, den Pole nicht fallen zu lasen, kann man alle Zustände, in denen die Umgebund nicht endet, mit einem einheitlichen Reward (beispielsweise $1$ oder $0$) versehen. Die Zustände, in denen der Pole umfällt und die Umgebung somit endet, kann man mit einem negativen Reward (wie beispielsweise $-1$) ``bestrafen''. Falls das Ziel jedoch darin besteht, den Poly in einer bestimmten Position zu behalten, könnten die Zustände mit der gewünschten Position mit einem hohen Reward belohnt werden, der mit der Abweichung vom gewünschten Zustand abnimmt.\\
+Da keine genaueren Vorgaben gemacht werden und es üblich ist, das reine ``Überleben'' des Poles zu belohnen, wird folgende Belohnungsstruktur zugrunde gelegt: $0$ für alle Übergänge zu Zustanden, in denen die Umgebung endet, $+1$ zu allen Zuständen, in denen die Umgebung nicht endet. 
+\end{document}
