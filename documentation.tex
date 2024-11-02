@@ -24,7 +24,7 @@
 \section*{Aufgabe 2.2}
 \section*{Aufgabe 2.3}
 \subsection*{a)}
-Jeder State $\mathcal{S}$ wird definiert durch einen Vektor der folgenden Form:
+Die Menge der States $\mathcal{S}$ wird definiert durch:
 \[ % enter display math mode
 \begin{Bmatrix}
     \left.
@@ -38,6 +38,7 @@ Jeder State $\mathcal{S}$ wird definiert durch einen Vektor der folgenden Form:
     c_{xy} = Cart~position,~c_v = cart~velocity,~p_\alpha = pole~angle,~p_\omega = angular~velocity~of~pole
 \end{Bmatrix}
 \]%  
+Das heißt, dass ein konkreter Zustand durch die Kombination der Cart-Position, -Geschwindigkeit, der Pole-Position und der Pole-Winkelgeschwindigkeit definiert wird.\\
 Die Aktionen $\mathcal{A}$ sind gegeben durch:
 \[ % enter display math mode
 \begin{Bmatrix}
@@ -46,5 +47,28 @@ Die Aktionen $\mathcal{A}$ sind gegeben durch:
 \]% 
 Die Zustandsübergänge werden dabei durch die Bewegungsgleichungen der physikalischen Umgebung definiert. So kann eine Cart-Bewegung nach links den Pole, abhängig von der Cart- und Pole-Geschwindigkeit, nach links fallen lassen, die Fallgeschwindigkeit verringern oder gar einen Fall nach rechts veranlassen oder diesen beschleunigen. Analog für eine Cart-Bewegung nach rechts.\\
 Die Belohnungsstruktur hängt davon ab, was das endgültige Ziel ist. Sofern das Ziel ``nur'' ist, den Pole nicht fallen zu lasen, kann man alle Zustände, in denen die Umgebund nicht endet, mit einem einheitlichen Reward (beispielsweise $1$ oder $0$) versehen. Die Zustände, in denen der Pole umfällt und die Umgebung somit endet, kann man mit einem negativen Reward (wie beispielsweise $-1$) ``bestrafen''. Falls das Ziel jedoch darin besteht, den Poly in einer bestimmten Position zu behalten, könnten die Zustände mit der gewünschten Position mit einem hohen Reward belohnt werden, der mit der Abweichung vom gewünschten Zustand abnimmt.\\
-Da keine genaueren Vorgaben gemacht werden und es üblich ist, das reine ``Überleben'' des Poles zu belohnen, wird folgende Belohnungsstruktur zugrunde gelegt: $0$ für alle Übergänge zu Zustanden, in denen die Umgebung endet, $+1$ zu allen Zuständen, in denen die Umgebung nicht endet. 
+Da keine genaueren Vorgaben gemacht werden und es üblich ist, das reine ``Überleben'' des Poles zu belohnen, wird folgende Belohnungsstruktur zugrunde gelegt: $0$ für alle Übergänge zu Zustanden, in denen die Umgebung endet, $+1$ zu allen Zuständen, in denen die Umgebung nicht endet. \\
+Eine Simulation mit einer zufälligen Aktionswahl ist im beiliegenden Jupyter-Notebook dargestellt und dient nur dazu, ein Gefühl dafür zu bekommen, wie sich das Environment verhält.
+
+\subsubsection*{b)}
+
+Um das CartPole-Problem zu lösen (den Pole möglichst lange aufrecht halten und nicht aus dem Environment herausfahren), wurden zunächst drei Policies betrachtet und simuliert, die ohne Learning-Ansätze auskommen.\\
+\textbf{Policy 1:} Die erste Policy ist besonders simpel. Sie kontert die Neigung des Poles, indem sie das Cart in die Richtung bewegt, in die der Pole aktuell geneigt ist.\\
+\textbf{Policy 2:} Die zweite Policy stellt die erste iterative Erweiterung/Verbesserung der Policies dar. Neben der Pole-Position wird nun auch die Winkelgeschwindigkeit betrachtet. Nun wird nicht mehr einfach versucht, den Winkel des Poles zu ``kontern'', sondern auch den Fall zu verhindern. Das heißt, wenn der Pole nach  links fällt, bewegt sich auch das Cart nach links. Wenn der Pole nach rechts fällt, fährt das Cart auch nach rechts. Dabei inkludiert ein ``Fall nach rechts'' auch die Situation, in der der Pole zwar einen negativen Winkel aber eine positive Winkelgeschwindigkeit hat. Das Ziel ist, eine Überkorrektur zu vermeiden und den Fall des Poles wieder abzubremsen.\\
+\textbf{Policy 3:} Die dritte Policy baut auf der zweiten auf, indem das Cart aktiv vom Rand des Environments ferngehalten wird. Das heißt, wenn das Cart sich auf eine bestimmte Distanz dem linken Rand nähert, wird es nach rechts bewegt. Analog für den rechten Rand. Dadurch achtet die dritte Policy darauf, beide Bedingungen, die zu einem Episodenende führen können, zu vermeiden: Das Umfallen des Poles und das Herausfahren des Carts.\\
+Die Ergebnisse der Policies sind in Abbildung \ref{img:2_3_b} zu sehen.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/img_2_3_b.png}
+    \caption{Policy-basierte Simulation des CartPole Environments ohne Learning-Ansätze. 100 Durchläufe (1 Durchläufe = 200 Episoden) zur Mittelung der Werte.}
+    \label{img:2_3_b}
+\end{figure}
+
+% TODO: Diskussion Effektivität, Schwierigkeiten und Analyse mit Hinblick auf Stabilität und Zielerreichung 
+Zunächst gilt es, die Effektivität der Policies zu beurteilen. Abbildung \ref{img:2_3_b} suggeriert starke Unterschiede zwischen Policy 1 und den beiden Erweiterungsstufen. Das heißt, dass ein Betrachten der Winkelgeschwindigkeit des Poles, um eine Überkorrektur der Position zu vermeiden, einen signifikanten Einfluss auf die Performance eines Ansatzes hat. Der Unterschied zwischen Policy 2 und 3 ist hingegen nur sehr klein. Policy 3 zeigt jedoch meist eine marginal bessere Performance. Das heißt, dass ein reines ``Weglenken'' vom Rand, ohne die Pole-Position zusätzlich zu beachten, nur zu einer minimal längeren Simulationszeit führt. Dies kann daran liegen, dass der Pole in einem der nächsten Schritte umfällt, da das Cart eigentlich noch weiter in Richtung des Randes fahren müsste, um die Pole-Bewegung auszugleichen.\\
+Die Schwierigkeit liegt also darin, die optimale Handlung für alle Kombinationen aus Pole- und Cart-Status zu finden. Besonders die Situationen, in denen ein feinfühliges Handeln notwendig ist (langsames Wegfahren vom Rand ohne den Pole zu stark auszulenken), stellen ein Problem für die Policy dar, da sie nur wenige grundlegende Fallunterscheidungen machen.\\
+Abbildung \ref{img:2_3_b} zeigt außerdem eindrücklich die Stabilität der Policies (Stabilität meint dabei die Konstanz des Ergebnisses). Zu sehen ist, dass der durchschnittliche Reward der einzelnen Policies über alle Episoden hinweg annähern gleich bleibt. Insgesamt wurden $100$ Durchgänge durchgeführt, wobei ein Durchgang aus $200$ Episoden besteht. Das heißt, dass sich der Reward-Wert pro Episode als Durchschnitt aus $100$ Werten berechnet. Die hohe Stabilität der Policies zeigt, dass sie nicht auf ``glückliche Zufälle'' angewiesen sind oder nur aufgrund unglücklicher Umstände einen niedrigen Reward pro Episode erreichen.\\
+Die Zielerreichung lässt sich aus zwei Sichten auf den Begriff ``Ziel'' analysieren: 1. Das Ziel ist, aufgrund der Veränderungen zwischen den Policy-Versionen einen besseren Reward zu erzielen oder 2. Das Ziel ist, einen möglichst hohen Reward zu erzielen. Die erste Definition des Begriffs ``Ziel'' wurde zuvor bereits im Zuge der Effektivität analysiert. Zusammenfassend lässt sich hier dementsprechend noch einmal erwähnen, dass die Veränderungen zwischen den Policies zu einer stetigen Erhöhung des durchschnittlichen Rewards führen. Vor allem die Veränderung des Rewards von Policy 1 zu Policy 2 ist signifikant hervorzuheben. Mit Hinblick auf die zweite Definition des Begriffs ``Ziel'' sollte man zuvor definieren, was der maximal erreichbare Reward ist. Dieser liegt laut Dokumentation bei $500$. Das heißt, dass Policy 1 nicht einmal $10\%$ des maximalen Rewards erreicht. Policy 2 und 3 liegen immerhin bei etwa $40\%$. Das legt jedoch nahe, dass noch Raum für Verbesserung besteht und keine der oben vorgestellten Policies ausreicht, um die Umgebung dauerhaft in einer stabilen Situation zu behalten. Stabil meint dabei: Den Pole aufrecht und stationär und das Cart möglichst nah in der Mitte und ebenfalls stationär. 
+
 \end{document}
