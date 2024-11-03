@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-
+\usepackage{subcaption}
 \usepackage{sectsty}
 \usepackage{graphicx}
 \usepackage{amsmath} % for 'pmatrix' environment
@@ -22,6 +22,39 @@
 
 \section*{Aufgabe 2.1}
 \section*{Aufgabe 2.2}
+
+Im folgenden werden vier Aktionen simuliert, $X$ zeigt dabei die aktuelle Position im grid an.
+In diesen vier Schritten entsteht ein Gesamtreward von $0$, da weder das grid verlassen, noch $A$ oder $B$ erreicht wird.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_0.png}
+    \end{subfigure}
+    \hfill % Abstand zwischen den Bildern
+    % Zweites Bild oben rechts
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_1.png}
+    \end{subfigure}
+    
+    \vspace{1em} % Vertikaler Abstand zwischen den Zeilen
+    
+    % Drittes Bild unten links
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_2.png}
+    \end{subfigure}
+    \hfill % Abstand zwischen den Bildern
+    % Viertes Bild unten rechts
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_3.png}
+    \end{subfigure}
+\end{figure}
+
+
 \section*{Aufgabe 2.3}
 \subsection*{a)}
 Die Menge der States $\mathcal{S}$ wird definiert durch:
