@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-
+\usepackage{subcaption}
 \usepackage{sectsty}
 \usepackage{graphicx}
 \usepackage{amsmath} % for 'pmatrix' environment
@@ -115,6 +115,44 @@ Das Konvergenzverhalten der Action Values wird, ähnlich zum vorherigen Abschnit
 Im Vergleich mit den State Values fallen ein paar Dinge auf, einige davon liefern Erklärungen für die Phänomene, die bei den State Values zu beobachten waren. Gleichbleibend ist die grundsätzliche Tendenz, dass die Action Values, die zu Zellen gehören, die sich näher an $A$ oder $B$ befinden, einen höheren Wert haben, sie sind somit ``wertvoller''. Außerdem ist gleichbleibend, dass die Werte in den unteren Ecken besonders klein sind (bzw. besonders negativ sind). Das liegt daran, dass $50\%$ der Aktionen in diesen Zuständen zu einem negativen Reward führen. Auch wenn hier zwischen den Aktionen unterschieden wird, findet sich in der Formel zur Berechnung doch auch die State Value wieder, in welcher keine Unterscheidung zwischen den Aktionen gemacht wird. Unterscheiden tut sich jedoch das Verhalten in der Nähe der Sonderzustände $A$
 und $B$. Zuvor wurde beobachtet, dass die State Values verhältnismäßig klein waren, obwohl die Zellen direkt an $A$ oder $B$ angrenzen. Das lag an der Random-Policy, welche dazu führt, dass (häufig) auch suboptimale Aktionen gewählt werden. Dies wird unter der Betrachtung der Action Values besonders deutlich. Betrachtet man nun wieder Zelle (0,0) (oben links), fällt einem auf, dass die Action Values für die drei suboptimalen Aktionen (hoch, runter, links) verhältnismäßig klein sind, die Action Value, die den Schritt in Richtung $A$ beschreibt (rechts), jedoch sehr groß, da in $A$ ein hoher Reward von $10$ folgt. Die Action Values in $A$ und $B$ sind identisch zu den State Values. Dies liegt daran, dass in diesen Zuständen keine Unterscheidung zwischen den Aktionen gemacht wird, sondern immer dieselbe Bewegung mit dem selben Reward durchgeführt wird.
 \section*{Aufgabe 2.2}
+
+Im folgenden werden vier Aktionen simuliert, $X$ zeigt dabei die aktuelle Position im grid an.
+In diesen vier Schritten entsteht ein Gesamtreward von $0$, da weder das grid verlassen, noch $A$ oder $B$ erreicht wird. Der Zustand des Environments nach diesen Schritten ist in Abbildung \ref{img:2_2} dargestellt.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_0.png}
+        \caption{Ergebnis nach Schritt 1}
+    \end{subfigure}
+    \hfill % Abstand zwischen den Bildern
+    % Zweites Bild oben rechts
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_1.png}
+        \caption{Ergebnis nach Schritt 2}
+    \end{subfigure}
+    
+    \vspace{1em} % Vertikaler Abstand zwischen den Zeilen
+    
+    % Drittes Bild unten links
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_2.png}
+        \caption{Ergebnis nach Schritt 3}
+    \end{subfigure}
+    \hfill % Abstand zwischen den Bildern
+    % Viertes Bild unten rechts
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/step_3.png}
+        \caption{Ergebnis nach Schritt 4}
+    \end{subfigure}
+    \caption{Darstellung vier aufeinanderfolgender Schritte in der Gymnasium-Simulation}
+    \label{img:2_2}
+\end{figure}
+
 
 \section*{Aufgabe 2.3}
 
