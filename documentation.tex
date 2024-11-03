@@ -3,6 +3,8 @@
 \usepackage{sectsty}
 \usepackage{graphicx}
 \usepackage{amsmath} % for 'pmatrix' environment
+\usepackage{caption}
+\usepackage{subcaption}
 
 % Margins
 \topmargin=-0.45in
@@ -21,6 +23,54 @@
 \pagebreak
 
 \section*{Aufgabe 2.1}
+\subsubsection*{a)}
+% TODO: Beschreibung Konvergenzverhalten
+% TODO: Ergebnisse beschreiben, erklären Auswirkung random Policy
+
+Das Konvergenzverhalten des iterativen Algorithmus zur Bestimmung der State Values ist in Abbildung \ref{img:2_1_a1} und Abbildung \ref{img:2_1_a2} dargestellt. In Abbildung \ref{img:2_1_a1} wird für jede Iteration ermittelt, was die größte Veränderung ist, dabei werden alle Zellen betrachtet. Zu sehen ist, adss bereits nach ca. $6$ Iterationen kaum mehr Veränderungen auftreten. Um eine vollständige Konvergenz sicherzustellen, wurden jedoch insgesamt $15$ Iterationen durchgeführt.\\
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/img_2_1_a1.png}
+    \caption{Konvergenzverhalten der State Values}
+    \label{img:2_1_a1}
+\end{figure}
+Die Endwerte des Algorithmus sind in Abbildung \ref{img:2_1_a2_it15} dargestellt. Zu sehen ist dort, dass die speziellen Zellen $A$ und $B$ (Position $(0,1)$ und $(0,3)$) einen besonders hohen Wert haben. Dieser kommt dadurch zustande, dass eine Bewegung in diesen Zuständen zu einem direkten Reward von $10$ bzw. $5$ führt. Zu sehen ist jedoch auch, dass der Wert der Zustände etwas unter dem Reward-Wert liegt. Dies liegt an der Betrachtung der Folgezusstände $A'$ und $B'$, die eine negative State Value besitzen, da sie nah am Rand und zudem weit weg von $A$ und $B$ liegen, was die einzigen Zellen sind, in denen ein Übergang einen positiven Reward ungleich Null gibt. Zu sehen ist außerdem, dass aus diesem Grund die State Values höher werden, je weiter man sich den Zuständen $A$ und $B$ nähert. Um dies in Worte zu fassen: Die Zustände werden wertvoller, je näher sie an $A$ oder $B$ sind, da es dort einen hohen Reward gibt.\\
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_a_it1.png}
+        \caption{State values nach einer Iteration}
+        \label{img:2_1_a2_it1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_a_it2.png}
+        \caption{State values nach zwei Iterationen}
+        \label{img:2_1_a2_it2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_a_it5.png}
+        \caption{State values nach fünf Iterationen}
+        \label{img:2_1_a2_it5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_a_it_final.png}
+        \caption{Endwerte der State Values (15 Iterationen)}
+        \label{img:2_1_a2_it15}
+    \end{subfigure}
+    \caption{State Values zur Betrachtung des Konvergenzverhaltens des Algorithmus}
+    \label{img:2_1_a2}
+\end{figure}
+Zuletzt gilt es, den Einfluss der Random-Policy zu beschreiben. Diese führt dazu, dass in jedem Zustand eine zufällige Aktion ausgeführt wird (Rechts, Links, Hoch, Runter), unabhängig von den State oder Action Values (nächstes Kapitel). Das führt dazu, dass Zelle (0,0) (oben links) einen vergleichsweise niedrigen Wert hat, obwohl sie nur einen Schritt von der Zelle mit dem höchsten Wert ($A$) entfernt ist. Dies liegt daran, dass von dort aus nur in $25\%$ der Fälle nach $A$ gewechselt wird. In $50\%$ der Fälle gibt es sogar einen negativen Reward, weil das Spielfeld verlassen wurde. Die Random-Policy führt also dazu, dass viele State Values geringer sind, als sie sein könnten, da in $50\%-75\%$ der Fälle (abhängig von der Zelle) eine nicht optimale Aktion gewählt wird.
+
+\subsubsection*{b)}
+
 \section*{Aufgabe 2.2}
 
 Im folgenden werden vier Aktionen simuliert, $X$ zeigt dabei die aktuelle Position im grid an.
