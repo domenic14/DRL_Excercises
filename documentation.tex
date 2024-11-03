@@ -23,9 +23,8 @@
 \pagebreak
 
 \section*{Aufgabe 2.1}
+
 \subsubsection*{a)}
-% TODO: Beschreibung Konvergenzverhalten
-% TODO: Ergebnisse beschreiben, erklären Auswirkung random Policy
 
 Das Konvergenzverhalten des iterativen Algorithmus zur Bestimmung der State Values ist in Abbildung \ref{img:2_1_a1} und Abbildung \ref{img:2_1_a2} dargestellt. In Abbildung \ref{img:2_1_a1} wird für jede Iteration ermittelt, was die größte Veränderung ist, dabei werden alle Zellen betrachtet. Zu sehen ist, adss bereits nach ca. $6$ Iterationen kaum mehr Veränderungen auftreten. Um eine vollständige Konvergenz sicherzustellen, wurden jedoch insgesamt $15$ Iterationen durchgeführt.\\
 \begin{figure}
@@ -34,7 +33,7 @@ Das Konvergenzverhalten des iterativen Algorithmus zur Bestimmung der State Valu
     \caption{Konvergenzverhalten der State Values}
     \label{img:2_1_a1}
 \end{figure}
-Die Endwerte des Algorithmus sind in Abbildung \ref{img:2_1_a2_it15} dargestellt. Zu sehen ist dort, dass die speziellen Zellen $A$ und $B$ (Position $(0,1)$ und $(0,3)$) einen besonders hohen Wert haben. Dieser kommt dadurch zustande, dass eine Bewegung in diesen Zuständen zu einem direkten Reward von $10$ bzw. $5$ führt. Zu sehen ist jedoch auch, dass der Wert der Zustände etwas unter dem Reward-Wert liegt. Dies liegt an der Betrachtung der Folgezusstände $A'$ und $B'$, die eine negative State Value besitzen, da sie nah am Rand und zudem weit weg von $A$ und $B$ liegen, was die einzigen Zellen sind, in denen ein Übergang einen positiven Reward ungleich Null gibt. Zu sehen ist außerdem, dass aus diesem Grund die State Values höher werden, je weiter man sich den Zuständen $A$ und $B$ nähert. Um dies in Worte zu fassen: Die Zustände werden wertvoller, je näher sie an $A$ oder $B$ sind, da es dort einen hohen Reward gibt.\\
+Die Endwerte des Algorithmus sind in Abbildung \ref{img:2_1_a2_it15} dargestellt. Zu sehen ist dort, dass die speziellen Zellen $A$ und $B$ (Position $(0,1)$ und $(0,3)$) einen besonders hohen Wert haben. Dieser kommt dadurch zustande, dass eine Bewegung in diesen Zuständen zu einem direkten Reward von $10$ bzw. $5$ führt. Zu sehen ist jedoch auch, dass der Wert der Zustände etwas unter dem Reward-Wert liegt. Dies liegt an der Betrachtung der Folgezusstände $A'$ und $B'$, die eine negative State Value besitzen, da sie nah am Rand und zudem weit weg von $A$ und $B$ liegen. $A$ und $B$ sind die einzigen Zellen, in denen ein Übergang einen positiven Reward ungleich Null gibt. Zu sehen ist außerdem, dass aus diesem Grund die State Values höher werden, je weiter man sich den Zuständen $A$ und $B$ nähert. Um dies in Worte zu fassen: Die Zustände werden wertvoller, je näher sie an $A$ oder $B$ sind, da es dort einen hohen Reward gibt.\\
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
@@ -71,9 +70,56 @@ Zuletzt gilt es, den Einfluss der Random-Policy zu beschreiben. Diese führt daz
 
 \subsubsection*{b)}
 
+Das Konvergenzverhalten der Action Values wird, ähnlich zum vorherigen Abschnitt, mithilfe der Differenzkurve in Abbildung \ref{img:2_1_b1} und der konvergierten Endwerte in Abbildung \ref{img:2_1_b2} beschrieben. Die Action Values wurden dabei zu Beginn alle mit $0$ initilisiert.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/img_2_1_b1.png}
+    \caption{Konvergenzverhalten der Action Values}
+    \label{img:2_1_b1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_b_up.png}
+        \caption{Finale Action Values ``Up''}
+        \label{img:2_1_b2_up}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_b_down.png}
+        \caption{Finale Action Values ``Down''}
+        \label{img:2_1_b2_down}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_b_right.png}
+        \caption{Finale Action Values ``Right''}
+        \label{img:2_1_b2_right}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/img_2_1_b_left.png}
+        \caption{Finale Action Values ``Left''}
+        \label{img:2_1_b2_left}
+    \end{subfigure}
+    \caption{Action Values zur Betrachtung des Konvergenzverhaltens des Algorithmus}
+    \label{img:2_1_b2}
+\end{figure}
+
+Im Vergleich mit den State Values fallen ein paar Dinge auf, einige davon liefern Erklärungen für die Phänomene, die bei den State Values zu beobachten waren. Gleichbleibend ist die grundsätzliche Tendenz, dass die Action Values, die zu Zellen gehören, die sich näher an $A$ oder $B$ befinden, einen höheren Wert haben, sie sind somit ``wertvoller''. Außerdem ist gleichbleibend, dass die Werte in den unteren Ecken besonders klein sind (bzw. besonders negativ sind). Das liegt daran, dass $50\%$ der Aktionen in diesen Zuständen zu einem negativen Reward führen. Auch wenn hier zwischen den Aktionen unterschieden wird, findet sich in der Formel zur Berechnung doch auch die State Value wieder, in welcher keine Unterscheidung zwischen den Aktionen gemacht wird. Unterscheiden tut sich jedoch das Verhalten in der Nähe der Sonderzustände $A$
+und $B$. Zuvor wurde beobachtet, dass die State Values verhältnismäßig klein waren, obwohl die Zellen direkt an $A$ oder $B$ angrenzen. Das lag an der Random-Policy, welche dazu führt, dass (häufig) auch suboptimale Aktionen gewählt werden. Dies wird unter der Betrachtung der Action Values besonders deutlich. Betrachtet man nun wieder Zelle (0,0) (oben links), fällt einem auf, dass die Action Values für die drei suboptimalen Aktionen (hoch, runter, links) verhältnismäßig klein sind, die Action Value, die den Schritt in Richtung $A$ beschreibt (rechts), jedoch sehr groß, da in $A$ ein hoher Reward von $10$ folgt. Die Action Values in $A$ und $B$ sind identisch zu den State Values. Dies liegt daran, dass in diesen Zuständen keine Unterscheidung zwischen den Aktionen gemacht wird, sondern immer dieselbe Bewegung mit dem selben Reward durchgeführt wird.
 \section*{Aufgabe 2.2}
+
 \section*{Aufgabe 2.3}
+
 \subsection*{a)}
+
 Die Menge der States $\mathcal{S}$ wird definiert durch:
 \[ % enter display math mode
 \begin{Bmatrix}
