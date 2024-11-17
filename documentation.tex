@@ -116,4 +116,52 @@ Die Implementierung des GPI Algorithmus mit der Action Value Function ist dem be
 Zu sagen ist, dass sich in diesem konkreten Beispiel die Ansätze nicht drastisch unterscheiden, lediglich der Ansatz, bei der die Policy nach jeder State Value Iteration aktualisiert wird, zeigt eine deutlich schnellere Konvergenzrate. Auch die Action Values benötigen in etwa $30$ Iterationen, um zu konvergieren. Außerdem braucht die Policy, wie bei dem in a) vorgestellten Ansatz, eine Iteration mit konvergierten Action Values, um zur optimalen Policy zu werden.\\
 Es kann jedoch sein, dass sich in anderen Beispielen einer der Ansätze eher anbietet. Beispielsweise kann es in modellfreien Umgebungen einfacher sein, die Action Value function zu verwenden, da die beste Action über eine einfache Ermittlung des höchsten Wertes gelingen kann. Die Schätzung der State Values hingegen, die die Action Values implizit verwendet, erfordert eine aufwändigere Interaktion mit der Umgebung, um eine zuverlässige Aussage über die optimale Policy zu ermögichen. Daher kann es in modellfreien Umgebungen schneller zur Konvergenz mithilfe der Action Values kommen, wohingegen eine modellbasierte Umgebung förderlich für die Konvergenzgeschwindigkeit mithilfe der State Values ist.
 
+\section*{Aufgabe 3.2}
+
+\subsection*{a)}
+In unserer initialen Policy wird sich zu 80\% in Richtung des Ziels bewegt, also nach rechts oder nach unten.
+Eine initiale Policy sollte explorativ sein, damit möglichst viele Wege zum Ziel evaluiert werden.
+Außerdem sollte eine initiale Policy das Ziel erreichen können. Wenn für jeden state eine bestimmte Aktion gewählt wird, kann es sein, dass nie ein reward gesammelt wird. Somit haben wir nichts über die Umgebung gelernt.
+Eine zufällige Policy kann viele Iterationen benötigen und häufiger schlechte Wege nutzen (z.B. direkt einen Scritt wieder zurück gehen).
+Mit der Priorisierung von zielorientierten Wegen sollte schneller eine gute Policy gefunden werden. \\
+
+Die Heatmap aus 3.2 ist in figure \ref{img:heatmap} zu sehen. \\
+
+Da State Values nur den erwarteten return eines states beschreiben, wird nicht näher auf die Rückgabewerte der einzelnen Aktionen eingegangen.
+Wenn wir eine optimale Policy finden wollen sind aber gerade die bestimmten Aktionen wichtig mit denen wir einen hohen return bekommen.
+Um eine optimale policy zu approximieren brauchen wir also die state action values.
+Außerdem können die Monte Carlo Methoden kaum Ergebnisse liefern für Episoden die selten einen reward liefern.
+Wie man in figure \ref{img:heatmap} sieht, erhalten wir eigentlich nur nennenswerte Ergebnisse in den states $14$, $13$, $12$ und $11$.
+Die restlichen states sind entweder ein Loch oder liefern in zu vielen Fällen keinen reward. Allerdings müssen auch einige states von $0$ - $10$ besucht werden,
+jedoch können wir über diese states kaum Aussagen treffen dadurch, dass viele Episoden keinen reward liefern.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/frozen_heatmap.png}
+    \caption{Heatmap für die Frozen Umgebung}
+    \label{img:heatmap}
+\end{figure}
+
+\subsection*{b)}
+In figure \ref{img:3_2_b} wird die Summe der returns für mehrere policys dargestellt.
+Die beste policy wird danach ausgegeben und ihr gesammelter reward in 5000 Episoden. \\
+
+Für state 3.2 wurden folgende action values berechnet [0.399 0.405 0.408 0.307].
+Man sieht, dass die Richtungen links rechts und unten relativ ähnliche returns erwarten.
+Das hängt mit der nicht-Deterministischen Umgebung zusammen. Wenn man sich den state als Mensch anguckt, merkt man, dass die logische Entscheidung eigentlich Richtung rechts sein müsste.
+Allerdings bedeuted das wählen von Richtung rechts auch nicht zwinged, dass der Spieler sich tatsächlich in diese Richtung bewegt. Tatsächlich kann man mit den Richtungen links rechts und unten
+auf jeweils 2 verschiedenen Felder oder dem bisherigen landen, während man mit Richtung oben auf 3 verschiedenen Feldern landen kann und nicht auf dem eigenen Feld bleiben kann.
+Dadurch, dass man mit einer Aktion nicht ein bestimmtes, sondern eine Menge von möglichen Zielfeldern auswählt, ist die Aussagekraft eines action values nicht so hoch.
+
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/3_2_b.png}
+    \caption{Heatmap für die Frozen Umgebung}
+    \label{img:3_2_b}
+\end{figure}
+
+
 \end{document}
